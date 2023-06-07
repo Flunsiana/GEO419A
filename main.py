@@ -1,6 +1,8 @@
 import urllib.request
 import zipfile
 import os
+import tifffile as tiff
+import numpy as np
 
 
 def download_zip(url, destination_folder):
@@ -31,13 +33,21 @@ def extract_zip(zip_file, destination_folder):
                 else:
                     zip_ref.extract(file_name, destination_folder)
                     print(f"Extracted file: {extracted_file}")
+            return extracted_file
 
 
 # Beispielaufruf zum Herunterladen und Entpacken der ZIP-Datei
 download_url = "https://upload.uni-jena.de/data/641c17ff33dd02.60763151/GEO419A_Testdatensatz.zip"
-destination_folder = "C:/Users/chrli/OneDrive/Studium/01 Master Geoinformatik Jena/Semester/1 WS-22-23/419 - Python/419A_Abschlussaufgabe"
+destination_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python"
 zip_file = download_zip(download_url, destination_folder)
 
-if zip_file:
-    extract_zip(zip_file, destination_folder)
 
+if zip_file:
+    extracted_tiff_file = extract_zip(zip_file, destination_folder)
+
+    # TIFF-Bild als Numpy-Array einlesen
+    tiff_data = tiff.imread(extracted_tiff_file)
+
+    # Das Numpy-Array anzeigen oder weiterverarbeiten
+    print(tiff_data.shape)  # Ausgabe der Form des Arrays
+    print(tiff_data.dtype)  # Ausgabe des Datentyps der Array-Elemente
