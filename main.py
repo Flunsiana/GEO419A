@@ -1,22 +1,30 @@
-# This is a sample Python script.
-
-# Press Umschalt+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Strg+F8 to toggle the breakpoint.
+import urllib.request
+import zipfile
+import os
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def download_zip(url, destination_folder):
+    """Download a ZIP file from the given URL and save it to the destination folder."""
+    if not os.path.exists(destination_folder):
+        os.makedirs(destination_folder)
+
+    zip_filename = os.path.join(destination_folder, os.path.basename(url))
+    urllib.request.urlretrieve(url, zip_filename)
+    print(f"Downloaded ZIP file: {zip_filename}")
 
 
-# Liedel ist doof :)
-
-# hallloooooooooo
+    return zip_filename
 
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+def extract_zip(zip_file, destination_folder):
+    """Extract the ZIP file to the destination folder."""
+    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+        zip_ref.extractall(destination_folder)
+    print(f"Extracted ZIP file to: {destination_folder}")
+
+
+# Beispielaufruf zum Herunterladen der ZIP-Datei
+download_url = "https://upload.uni-jena.de/data/641c17ff33dd02.60763151/GEO419A_Testdatensatz.zip"
+destination_directory = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python"
+dzip_file = download_zip(download_url, destination_directory)
+extract_zip(zip_file, destination_directory)
