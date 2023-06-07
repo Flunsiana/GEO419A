@@ -12,7 +12,6 @@ def download_zip(url, destination_folder):
     urllib.request.urlretrieve(url, zip_filename)
     print(f"Downloaded ZIP file: {zip_filename}")
 
-
     return zip_filename
 
 
@@ -26,5 +25,5 @@ def extract_zip(zip_file, destination_folder):
 # Beispielaufruf zum Herunterladen der ZIP-Datei
 download_url = "https://upload.uni-jena.de/data/641c17ff33dd02.60763151/GEO419A_Testdatensatz.zip"
 destination_directory = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python"
-dzip_file = download_zip(download_url, destination_directory)
+zip_file = download_zip(download_url, destination_directory)
 extract_zip(zip_file, destination_directory)
