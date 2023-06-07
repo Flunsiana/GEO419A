@@ -12,16 +12,17 @@ Auf einem Pc erstellt:
 
 - conda create --name 419A
 - conda activate 419A
-- Installation:
-conda install numpy
-conda install pandas
-conda install matplotlib
-conda install seaborn
-conda install scikit-learn
-conda install tensorflow
-conda install keras
-conda install jupyter
-conda install pylint
+
+Installation:
+- conda install numpy
+- conda install pandas
+- conda install matplotlib
+- conda install seaborn
+- conda install scikit-learn
+- conda install tensorflow
+- conda install keras
+- conda install jupyter
+- conda install pylint
 
 Um dem Anderen es weiterzuschicken:
 - conda env export > 419A.yml
