@@ -23,6 +23,7 @@ Installation:
 - conda install keras
 - conda install jupyter
 - conda install pylint
+- conda install tifffile
 
 Um dem Anderen es weiterzuschicken:
 - conda env export > 419A.yml
