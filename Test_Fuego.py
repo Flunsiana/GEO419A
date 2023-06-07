@@ -24,7 +24,7 @@ def extract_zip(zip_file, destination_folder):
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_contents = zip_ref.namelist()
         for file_name in zip_contents:
-            if file_name.endswith(".tif"):
+            if not file_name.startswith("__MACOSX") and file_name.endswith(".tif"):
                 extracted_file = os.path.join(destination_folder, file_name)
                 if os.path.exists(extracted_file):
                     print("ZIP file already extracted. Skipping extraction.")
