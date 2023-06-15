@@ -1,8 +1,11 @@
 import urllib.request
 import zipfile
 import os
+
+import matplotlib.pyplot as plt
 import tifffile as tiff
 import numpy as np
+import pandas as ps
 
 
 def download_zip(url, destination_folder):
@@ -44,11 +47,23 @@ zip_file = download_zip(download_url, destination_folder)
 
 if zip_file:
     extracted_tiff_file = extract_zip(zip_file, destination_folder)
-    print(f"Extracted TIFF file: {extracted_tiff_file}")
 
     # TIFF-Bild als Numpy-Array einlesen
     tiff_data = tiff.imread(extracted_tiff_file)
 
-    # Das Numpy-Array anzeigen oder weiterverarbeiten
-    print(tiff_data.shape)  # Ausgabe der Form des Arrays
-    print(tiff_data.dtype)  # Ausgabe des Datentyps der Array-Elemente
+    tiff_array = np.array(tiff_data)
+
+
+# Überprüfen und Ersetzen von Nullwerten
+tiff_log = np.where(tiff_array > 0, tiff_array, 1e-10)
+
+# Logarithmische Skalierung
+gamma_dB0 = 10 * np.log10(tiff_log)
+
+plt.imshow(gamma_dB0, cmap='gray')
+
+# Neues berechnetes Bild in eine neue TIFF-Datei schreiben
+output_file = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/graphik.tif"
+tiff.imsave(output_file, gamma_dB0)
+
+plt.show()
