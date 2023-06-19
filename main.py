@@ -5,10 +5,7 @@ import matplotlib.pyplot as plt
 import tifffile as tiff
 import numpy as np
 from skimage.transform import resize
-import imageio
-from matplotlib.colors import LogNorm
-import pandas as ps
-from matplotlib.colors import LogNorm
+
 
 
 def download_zip(url, destination_folder):
@@ -72,15 +69,32 @@ max_value = np.nanmax(gamma_dB0_resized)
 print("Min Value:", min_value)
 print("Max Value:", max_value)
 
-
 plt.imshow(gamma_dB0_resized, cmap='gray')
+
 # Legende zur Darstellung des Wertebereichs
-plt.colorbar(label='dB')
+#plt.colorbar(label='dB')
+
+# Farbskala erstellen
+scale = plt.colorbar(label='dB')
+# Abstand zwischen Farbskalenbeschriftung und Farbskala erhöhen
+scale.ax.yaxis.set_label_coords(4, 0.5)
+
 # Begrenzung der Farbskala auf den Wertebereich
 plt.clim(min_value, max_value)
-plt.xlabel('X-Koordinate')
-plt.ylabel('Y-Koordinate')
-plt.title('Logarithmisch skaliertes Satellitenbild')
+
+# Titel und dicke Schrift und Abstand zur Grafik
+plt.title('Logarithmisch skaliertes Satellitenbild', fontweight='bold', y=1.05)
+
+# Achsenbeschriftung und Abstand zwischen Achsenbeschriftungen und Farbskala erhöhen
+plt.xlabel('X-Koordinate', labelpad=10)
+plt.ylabel('Y-Koordinate', labelpad=10)
+
+# Rahmens um die Grafik einstellen
+ax = plt.gca()
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['bottom'].set_linewidth(0.5)
+ax.spines['left'].set_linewidth(0.5)
 
 # Farbkodierung der "no data"-Bereiche
 plt.imshow(np.isnan(gamma_dB0_resized), cmap='gray', alpha=0.2, vmin=0, vmax=1)

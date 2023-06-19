@@ -74,11 +74,10 @@ plt.imshow(gamma_dB0_resized, cmap='gray')
 # Legende zur Darstellung des Wertebereichs
 #plt.colorbar(label='dB')
 
-colorbar = plt.colorbar(label='dB')
-# Anpassen der Position des Farbskalenlabels
-colorbar.ax.yaxis.set_label_coords(1.5, 0.5)
-# Erhöhen des Abstands der Beschriftung zur Farbskala
-colorbar.ax.yaxis.labelpad = 400
+# Farbskala erstellen
+scale = plt.colorbar(label='dB')
+# Abstand zwischen Farbskalenbeschriftung und Farbskala erhöhen
+scale.ax.yaxis.set_label_coords(4, 0.5)
 
 # Begrenzung der Farbskala auf den Wertebereich
 plt.clim(min_value, max_value)
