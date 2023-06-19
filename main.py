@@ -1,11 +1,14 @@
 import urllib.request
 import zipfile
 import os
-
 import matplotlib.pyplot as plt
 import tifffile as tiff
 import numpy as np
+from skimage.transform import resize
+import imageio
+from matplotlib.colors import LogNorm
 import pandas as ps
+from matplotlib.colors import LogNorm
 
 
 def download_zip(url, destination_folder):
@@ -16,10 +19,10 @@ def download_zip(url, destination_folder):
     zip_filename = os.path.join(destination_folder, os.path.basename(url))
 
     if os.path.exists(zip_filename):
-        print(f"{zip_filename} file already exists. Skipping download.")
+        print(f"{zip_filename} \n file already exists. Skipping download.")
     else:
         urllib.request.urlretrieve(url, zip_filename)
-        print(f"Downloaded ZIP file: {zip_filename}")
+        print(f"Downloaded ZIP file: \n{zip_filename}")
 
     return zip_filename
 
@@ -32,10 +35,10 @@ def extract_zip(zip_file, destination_folder):
             if not file_name.startswith("__MACOSX") and file_name.endswith(".tif"):
                 extracted_file = os.path.join(destination_folder, file_name)
                 if os.path.exists(extracted_file):
-                    print(f"{extracted_file} already extracted. Skipping extraction.")
+                    print(f"{extracted_file} \n already extracted. Skipping extraction.")
                 else:
                     zip_ref.extract(file_name, destination_folder)
-                    print(f"Extracted file: {extracted_file}")
+                    print(f"Extracted file:\n {extracted_file}")
             return extracted_file
 
 
@@ -53,17 +56,37 @@ if zip_file:
 
     tiff_array = np.array(tiff_data)
 
-
-# Überprüfen und Ersetzen von Nullwerten
-tiff_log = np.where(tiff_array > 0, tiff_array, 1e-10)
+# Überprüfen und Ersetzen von Nullwerten mit np.nan
+tiff_log = np.where(tiff_array != 0, tiff_array, np.nan)
 
 # Logarithmische Skalierung
 gamma_dB0 = 10 * np.log10(tiff_log)
 
-plt.imshow(gamma_dB0, cmap='gray')
+# Auflösung reduzieren
+reduced_resolution = (20000, 20000)
+gamma_dB0_resized = resize(gamma_dB0, reduced_resolution)
 
-# Neues berechnetes Bild in eine neue TIFF-Datei schreiben
-output_file = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/graphik.tif"
-tiff.imsave(output_file, gamma_dB0)
+# Wertebereich überprüfen
+min_value = np.nanmin(gamma_dB0_resized)
+max_value = np.nanmax(gamma_dB0_resized)
+print("Min Value:", min_value)
+print("Max Value:", max_value)
+
+
+plt.imshow(gamma_dB0_resized, cmap='gray')
+# Legende zur Darstellung des Wertebereichs
+plt.colorbar(label='dB')
+# Begrenzung der Farbskala auf den Wertebereich
+plt.clim(min_value, max_value)
+plt.xlabel('X-Koordinate')
+plt.ylabel('Y-Koordinate')
+plt.title('Logarithmisch skaliertes Satellitenbild')
+
+# Farbkodierung der "no data"-Bereiche
+plt.imshow(np.isnan(gamma_dB0_resized), cmap='gray', alpha=0.2, vmin=0, vmax=1)
+
+# als png abspeichern
+output_file = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/graphik_reduced_resolution.png"
+plt.savefig(output_file, dpi=300)
 
 plt.show()
