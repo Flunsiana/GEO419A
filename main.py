@@ -101,4 +101,3 @@ output_file = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semeste
 plt.savefig(output_file, dpi=300)
 
 plt.show()
-
