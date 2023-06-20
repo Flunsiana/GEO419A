@@ -24,6 +24,7 @@ Installation:
 - conda install jupyter
 - conda install pylint
 - conda install tifffile
+- conda install rasterio
 
 Um dem Anderen es weiterzuschicken:
 - conda env export > 419A.yml
