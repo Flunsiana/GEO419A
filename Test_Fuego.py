@@ -51,6 +51,7 @@ extracted_tiff_file = extract_zip(zip_file_path, download_folder)
 # TIFF-Bild als Numpy-Array einlesen
 tiff_data = tiff.imread(extracted_tiff_file)
 
+# Das Numpy-Array wird in einen neuen Array "tiff_array" konvertiert
 tiff_array = np.array(tiff_data)
 
 # Überprüfen und Ersetzen von Nullwerten mit np.nan
@@ -69,6 +70,7 @@ max_value = np.nanmax(gamma_dB0_resized)
 print("Min Value:", min_value)
 print("Max Value:", max_value)
 
+# Das reduzierte Bild wird mit plt.imshow(gamma_dB0_resized, cmap='gray') in einem Plot angezeigt
 plt.imshow(gamma_dB0_resized, cmap='gray')
 
 # Farbskala erstellen
