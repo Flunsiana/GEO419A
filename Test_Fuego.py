@@ -1,11 +1,13 @@
+# python standard libraries
+import os
 import urllib.request
 import zipfile
-import os
-import matplotlib.pyplot as plt
-import tifffile as tiff
-import numpy as np
-from skimage.transform import resize
 
+# third-party libraries
+import matplotlib.pyplot as plt
+import numpy as np
+import tifffile as tiff
+from skimage.transform import resize
 
 
 def download_zip(url, destination_folder):
@@ -16,10 +18,10 @@ def download_zip(url, destination_folder):
     zip_filename = os.path.join(destination_folder, os.path.basename(url))
 
     if os.path.exists(zip_filename):
-        print(f"{zip_filename} \n file already exists. Skipping download.")
+        print(f"{zip_filename}\nfile already exists. Skipping download.")
     else:
         urllib.request.urlretrieve(url, zip_filename)
-        print(f"Downloaded ZIP file: \n{zip_filename}")
+        print(f"Downloaded ZIP file:\n{zip_filename}")
 
     return zip_filename
 
@@ -32,26 +34,24 @@ def extract_zip(zip_file, destination_folder):
             if not file_name.startswith("__MACOSX") and file_name.endswith(".tif"):
                 extracted_file = os.path.join(destination_folder, file_name)
                 if os.path.exists(extracted_file):
-                    print(f"{extracted_file} \n already extracted. Skipping extraction.")
+                    print(f"{extracted_file}\nalready extracted. Skipping extraction.")
                 else:
                     zip_ref.extract(file_name, destination_folder)
-                    print(f"Extracted file:\n {extracted_file}")
+                    print(f"Extracted file:\n{extracted_file}")
             return extracted_file
 
 
 # Beispielaufruf zum Herunterladen und Entpacken der ZIP-Datei
 download_url = "https://upload.uni-jena.de/data/641c17ff33dd02.60763151/GEO419A_Testdatensatz.zip"
-destination_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python"
-zip_file = download_zip(download_url, destination_folder)
+download_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python"
+zip_file_path = download_zip(download_url, download_folder)
 
+extracted_tiff_file = extract_zip(zip_file_path, download_folder)
 
-if zip_file:
-    extracted_tiff_file = extract_zip(zip_file, destination_folder)
+# TIFF-Bild als Numpy-Array einlesen
+tiff_data = tiff.imread(extracted_tiff_file)
 
-    # TIFF-Bild als Numpy-Array einlesen
-    tiff_data = tiff.imread(extracted_tiff_file)
-
-    tiff_array = np.array(tiff_data)
+tiff_array = np.array(tiff_data)
 
 # Überprüfen und Ersetzen von Nullwerten mit np.nan
 tiff_log = np.where(tiff_array != 0, tiff_array, np.nan)
@@ -71,12 +71,9 @@ print("Max Value:", max_value)
 
 plt.imshow(gamma_dB0_resized, cmap='gray')
 
-# Legende zur Darstellung des Wertebereichs
-#plt.colorbar(label='dB')
-
 # Farbskala erstellen
 scale = plt.colorbar(label='dB')
-# Abstand zwischen Farbskalenbeschriftung und Farbskala erhöhen
+# Abstand zwischen Farbskalen-Beschriftung und Farbskala erhöhen
 scale.ax.yaxis.set_label_coords(4, 0.5)
 
 # Begrenzung der Farbskala auf den Wertebereich
