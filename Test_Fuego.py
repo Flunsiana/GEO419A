@@ -18,7 +18,7 @@ def download_zip(url, destination_folder):
     zip_filename = os.path.join(destination_folder, os.path.basename(url))
 
     if os.path.exists(zip_filename):
-        print(f"{zip_filename}\nfile already exists. Skipping download.")
+        print(f"{zip_filename}\nFile already exists. Skipping download.")
     else:
         urllib.request.urlretrieve(url, zip_filename)
         print(f"Downloaded ZIP file:\n{zip_filename}")
@@ -34,7 +34,7 @@ def extract_zip(zip_file, destination_folder):
             if not file_name.startswith("__MACOSX") and file_name.endswith(".tif"):
                 extracted_file = os.path.join(destination_folder, file_name)
                 if os.path.exists(extracted_file):
-                    print(f"{extracted_file}\nalready extracted. Skipping extraction.")
+                    print(f"{extracted_file}\nFile already extracted. Skipping extraction.")
                 else:
                     zip_ref.extract(file_name, destination_folder)
                     print(f"Extracted file:\n{extracted_file}")
@@ -96,7 +96,7 @@ ax.spines['left'].set_linewidth(0.5)
 # Farbkodierung der "no data"-Bereiche
 plt.imshow(np.isnan(gamma_dB0_resized), cmap='gray', alpha=0.2, vmin=0, vmax=1)
 
-# als png abspeichern
+# Als png abspeichern
 output_file = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/graphik_reduced_resolution.png"
 plt.savefig(output_file, dpi=300)
 
