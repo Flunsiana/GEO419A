@@ -7,27 +7,6 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 conda env create -f https://github.com/Flunsiana/419A/raw/main/419A.yml
 conda activate 419A
 
-Installation:
-- conda install numpy
-- conda install pandas
-- conda install matplotlib
-- conda install seaborn
-- conda install scikit-learn
-- conda install tensorflow
-- conda install keras
-- conda install jupyter
-- conda install pylint
-- conda install tifffile
-
-Um dem Anderen es weiterzuschicken:
-- conda env export > 419A.yml
-
-Der Andere öffnet es so:
-
-- mit cd auf Ordner navigieren
-- conda env create -f 419A.yml
-- conda activate 419A
-
 # PyCharm #
 
 1. Importieren von folgenden Python-Standardbibliotheken und Drittanbieterbibliotheken:
