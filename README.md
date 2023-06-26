@@ -2,7 +2,7 @@
 
 ## conda ##
 
-conda create --name 419A
+conda env create -f https://github.com/Flunsiana/419A/raw/main/419A.yml
 conda activate 419A
 
 Installation:
