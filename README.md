@@ -8,7 +8,7 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 - CMD.exe Prompt 0.1.1
 - Python-Pakete: `os`, `urllib.request`, `zipfile`, `matplotlib.pyplot`, `numpy`, `tifffile`, `skimage.transform`
 
-## conda ##
+## Conda ##
 
 ```
 conda env create -f 419A.yml
