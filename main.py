@@ -1,16 +1,16 @@
-# Python standard libraries
+# Python Standardbibliotheken
 import os
 import urllib.request
 import zipfile
 
-# Third-party libraries
+# Drittanbieter-Bibliotheken
 import matplotlib.pyplot as plt
 import numpy as np
 import tifffile as tiff
 from skimage.transform import resize
 
 
-# Zip-Datei von der angegebenen URL herunterladen und im Zielordner speichern, falls noch nicht geschehen
+# Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
 def download_zip(url, destination_folder):
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
@@ -26,7 +26,7 @@ def download_zip(url, destination_folder):
     return zip_filename
 
 
-# Zip-Datei im Zielordner entpacken, falls noch nicht geschehen
+# Funktion zum Entpacken der Zip-Datei im Zielordner, falls noch nicht geschehen
 def extract_zip(zip_file, destination_folder):
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_contents = zip_ref.namelist()
@@ -41,17 +41,20 @@ def extract_zip(zip_file, destination_folder):
             return extracted_file
 
 
-# Beispielaufruf zum Herunterladen und Entpacken der ZIP-Datei
+# Download-URL
 download_url = "https://upload.uni-jena.de/data/641c17ff33dd02.60763151/GEO419A_Testdatensatz.zip"
-download_folder = "C:/Users/chrli/OneDrive/Studium/01 Master Geoinformatik Jena/Semester/1 WS-22-23/419 - " \
-                  "Python/419A_Abschlussaufgabe"
+# Ordnerpfad
+download_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python"
+# ZIP-Datei herunterladen
 zip_file_path = download_zip(download_url, download_folder)
 
+# TIFF-Datei aus der ZIP-Datei extrahieren
 extracted_tiff_file = extract_zip(zip_file_path, download_folder)
 
 # TIFF-Bild als Numpy-Array einlesen
 tiff_data = tiff.imread(extracted_tiff_file)
 
+# Numpy-Array erstellen
 tiff_array = np.array(tiff_data)
 
 # Überprüfen und Ersetzen von Nullwerten mit np.nan
@@ -70,6 +73,7 @@ max_value = np.nanmax(gamma_dB0_resized)
 print("Min Value:", min_value)
 print("Max Value:", max_value)
 
+# Bild anzeigen
 plt.imshow(gamma_dB0_resized, cmap='gray')
 
 # Farbskala erstellen
@@ -98,9 +102,9 @@ ax.spines['left'].set_linewidth(0.5)
 # Farbkodierung der "no data"-Bereiche
 plt.imshow(np.isnan(gamma_dB0_resized), cmap='gray', alpha=0.2, vmin=0, vmax=1)
 
-# Als png abspeichern
-output_file = "C:/Users/chrli/OneDrive/Studium/01 Master Geoinformatik Jena/Semester/1 WS-22-23/419 - " \
-              "Python/419A_Abschlussaufgabe/graphik_reduced_resolution.png"
+# Als png speichern
+output_file = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/graphik_reduced_resolution.png"
 plt.savefig(output_file, dpi=300)
 
+# Grafik anzeigen
 plt.show()
