@@ -1,27 +1,9 @@
-## 419A ##
+# 419A #
 
-# GitHub Repository #
+## conda ##
 
-- einer erstellt ein repository und läd den anderen ein
-- per Mail EInladungslink akzeptieren
-
-- Wir arbeiten in Pycharm auf dem gleichen "main"
-- zusätzlich hat jeder seinen eignenen Testdatensatz "Test_Fuego" und Test_Amore"
-- Wenn ein Programmierungsschritt gelingt, wird er commited und gepusht
-- wenn einer push macht wird es auf GitHub hochgeladen
-- der andere muss dann sein Pycharm "updaten"
-- wir arbeiten zusammen, weshalb wir immer nur einen Testdatensatz "Test_Fuego" verwendet haben
-- mit "commit" schreiben wir Kommentare dazu
-
-
-# Anaconda #
-
-Auf einem Pc erstellt:
-
-- mit cd Auf den Ordner navigieren
-
-- conda create --name 419A
-- conda activate 419A
+conda create --name 419A
+conda activate 419A
 
 Installation:
 - conda install numpy
