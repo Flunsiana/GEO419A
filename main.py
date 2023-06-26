@@ -21,8 +21,7 @@ def download_zip(url, destination_folder):
 
         Returns:
             str: Der Pfad zur heruntergeladenen Zip-Datei
-
-        """
+    """
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
 
@@ -48,7 +47,7 @@ def extract_zip(zip_file, destination_folder):
 
         Returns:
             str: Der Pfad zur extrahierten TIFF-Datei
-        """
+    """
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_contents = zip_ref.namelist()
         for file_name in zip_contents:
