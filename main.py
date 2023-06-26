@@ -18,10 +18,10 @@ def download_zip(url, destination_folder):
     zip_filename = os.path.join(destination_folder, os.path.basename(url))
 
     if os.path.exists(zip_filename):
-        print(f"{zip_filename}\nFile already exists. Skipping download.")
+        print(f"{zip_filename}\nDatei existiert bereits. Download übersprungen.")
     else:
         urllib.request.urlretrieve(url, zip_filename)
-        print(f"Downloaded ZIP file:\n{zip_filename}")
+        print(f"Heruntergeladene ZIP-Datei:\n{zip_filename}")
 
     return zip_filename
 
@@ -34,7 +34,7 @@ def extract_zip(zip_file, destination_folder):
             if not file_name.startswith("__MACOSX") and file_name.endswith(".tif"):
                 extracted_file = os.path.join(destination_folder, file_name)
                 if os.path.exists(extracted_file):
-                    print(f"{extracted_file}\nFile already extracted. Skipping extraction.")
+                    print(f"{extracted_file}\nDatei bereits entpackt. Entpacken übersprungen.")
                 else:
                     zip_ref.extract(file_name, destination_folder)
                     print(f"Extracted file:\n{extracted_file}")
@@ -70,10 +70,10 @@ gamma_dB0_resized = resize(gamma_dB0, reduced_resolution)
 # Wertebereich überprüfen
 min_value = np.nanmin(gamma_dB0_resized)
 max_value = np.nanmax(gamma_dB0_resized)
-print("Min Value:", min_value)
-print("Max Value:", max_value)
+print("Min-Wert:", min_value)
+print("Max-Wert:", max_value)
 
-# Bild anzeigen
+# Bild anzeigen als Grauskala
 plt.imshow(gamma_dB0_resized, cmap='gray')
 
 # Farbskala erstellen
