@@ -21,5 +21,3 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 4. Geben Sie die Download-URL, den Pfad zum Zielordner und den Speicherpfad der PNG_Datei in den entsprechenden Variablen `download_url`, `download_folder` und `output_file` an
 5. Führen Sie das Programm aus
 
-Das Programm lädt die ZIP-Datei herunter, entpackt sie, liest die TIFF-Datei ein und führt die erforderlichen Verarbeitungsschritte durch. Das resultierende Bild wird angezeigt und als PNG-Datei gespeichert.
-
