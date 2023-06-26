@@ -37,7 +37,7 @@ def extract_zip(zip_file, destination_folder):
                     print(f"{extracted_file}\nDatei bereits entpackt. Entpacken übersprungen.")
                 else:
                     zip_ref.extract(file_name, destination_folder)
-                    print(f"Extracted file:\n{extracted_file}")
+                    print(f"Extrahierte Datei:\n{extracted_file}")
             return extracted_file
 
 
@@ -73,7 +73,7 @@ max_value = np.nanmax(gamma_dB0_resized)
 print("Min-Wert:", min_value)
 print("Max-Wert:", max_value)
 
-# Bild anzeigen als Grauskala
+# Bild in Graustufen anzeigen
 plt.imshow(gamma_dB0_resized, cmap='gray')
 
 # Farbskala erstellen
@@ -85,7 +85,7 @@ scale.ax.yaxis.set_label_coords(4, 0.5)
 # Begrenzung der Farbskala auf den Wertebereich
 plt.clim(min_value, max_value)
 
-# Titel, fette Schrift und Abstand zur Grafik
+# Titel, Fettdruck und Abstand zur Grafik einstellen
 plt.title('Logarithmisch skaliertes Satellitenbild', fontweight='bold', y=1.05)
 
 # Achsenbeschriftung und Abstand zwischen Achsenbeschriftungen und Farbskala erhöhen
