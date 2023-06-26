@@ -5,7 +5,7 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 ## Anforderungen
 
 - Python 3.x
-- Python-Pakete: os, urllib.request, zipfile, matplotlib.pyplot, numpy, tifffile, skimage.transform
+- Python-Pakete: `os`, `urllib.request`, `zipfile`, `matplotlib.pyplot`, `numpy`, `tifffile`, `skimage.transform`
 
 ## conda ##
 
