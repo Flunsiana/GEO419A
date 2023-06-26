@@ -1,4 +1,4 @@
-# 419A #
+# Modulare Programmierung in der Fernerkundung: Dateninterpretation 419A #
 
 ## conda ##
 
