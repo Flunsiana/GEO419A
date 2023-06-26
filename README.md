@@ -13,6 +13,10 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 - conda env create -f 419A.yml
 - conda activate 419A
 
+## Formel ##
+
+𝛾𝑑𝐵₀ = 10 * log₁₀(𝛾ₗ𝑖𝑛₀)
+
 # Verwendung
 
 1. Laden Sie die die Dateien `main.py` und `419.yml` aus Github herunter
