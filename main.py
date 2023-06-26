@@ -12,6 +12,17 @@ from skimage.transform import resize
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
 def download_zip(url, destination_folder):
+    """
+        Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner
+
+        Args:
+            url (str): Die URL der Zip-Datei
+            destination_folder (str): Der Pfad zum Zielordner, in dem die Zip-Datei gespeichert werden soll
+
+        Returns:
+            str: Der Pfad zur heruntergeladenen Zip-Datei
+
+        """
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
 
@@ -28,6 +39,16 @@ def download_zip(url, destination_folder):
 
 # Funktion zum Entpacken der Zip-Datei im Zielordner, falls noch nicht geschehen
 def extract_zip(zip_file, destination_folder):
+    """
+        Funktion zum Entpacken der Zip-Datei im Zielordner
+
+        Args:
+            zip_file (str): Der Pfad zur Zip-Datei
+            destination_folder (str): Der Pfad zum Zielordner, in dem die Dateien entpackt werden sollen
+
+        Returns:
+            str: Der Pfad zur extrahierten TIFF-Datei
+        """
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_contents = zip_ref.namelist()
         for file_name in zip_contents:
