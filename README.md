@@ -1,6 +1,6 @@
 # Modulare Programmierung in der Fernerkundung: Dateninterpretation 419A #
 
-Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, eine TIFF-Datei als numpy-Array einzulesen, um diese anschließend nach der Rückstreuintensität 𝛾𝑑𝐵0=10∗log10(𝛾𝑙𝑖𝑛0) zu logarithmisieren und das Ergebnis als Bild abzuspeichern.
+Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, eine TIFF-Datei als numpy-Array einzulesen, um diese anschließend nach der Rückstreuintensität zu logarithmisieren und das Ergebnis als Bild abzuspeichern.
 
 ## conda ##
 
