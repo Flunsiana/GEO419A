@@ -1,48 +1,11 @@
-## 419A ##
+# Modulare Programmierung in der Fernerkundung: Dateninterpretation 419A #
 
-# GitHub Repository #
+Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, eine TIFF-Datei als numpy-Array einzulesen, um diese anschließend nach der Rückstreuintensität zu logarithmisieren und das Ergebnis als Bild abzuspeichern.
 
-- einer erstellt ein repository und läd den anderen ein
-- per Mail EInladungslink akzeptieren
+## conda ##
 
-- Wir arbeiten in Pycharm auf dem gleichen "main"
-- zusätzlich hat jeder seinen eignenen Testdatensatz "Test_Fuego" und Test_Amore"
-- Wenn ein Programmierungsschritt gelingt, wird er commited und gepusht
-- wenn einer push macht wird es auf GitHub hochgeladen
-- der andere muss dann sein Pycharm "updaten"
-- wir arbeiten zusammen, weshalb wir immer nur einen Testdatensatz "Test_Fuego" verwendet haben
-- mit "commit" schreiben wir Kommentare dazu
-
-
-# Anaconda #
-
-Auf einem Pc erstellt:
-
-- mit cd Auf den Ordner navigieren
-
-- conda create --name 419A
-- conda activate 419A
-
-Installation:
-- conda install numpy
-- conda install pandas
-- conda install matplotlib
-- conda install seaborn
-- conda install scikit-learn
-- conda install tensorflow
-- conda install keras
-- conda install jupyter
-- conda install pylint
-- conda install tifffile
-
-Um dem Anderen es weiterzuschicken:
-- conda env export > 419A.yml
-
-Der Andere öffnet es so:
-
-- mit cd auf Ordner navigieren
-- conda env create -f 419A.yml
-- conda activate 419A
+conda env create -f 419A.yml
+/n conda activate 419A
 
 # PyCharm #
 
