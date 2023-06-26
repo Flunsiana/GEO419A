@@ -37,7 +37,7 @@ def extract_zip(zip_file, destination_folder):
                     print(f"{extracted_file}\nDatei bereits entpackt. Entpacken übersprungen.")
                 else:
                     zip_ref.extract(file_name, destination_folder)
-                    print(f"Extrahierte Datei:\n{extracted_file}")
+                    print(f"Entpackte Datei:\n{extracted_file}")
             return extracted_file
 
 
