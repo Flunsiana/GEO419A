@@ -4,7 +4,7 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 
 ## conda ##
 
-conda env create -f https://github.com/Flunsiana/419A/raw/main/419A.yml
+conda env create -f 419A.yml
 conda activate 419A
 
 # PyCharm #
