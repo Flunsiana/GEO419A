@@ -2,7 +2,7 @@
 
 Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, eine TIFF-Datei als numpy-Array einzulesen, um diese anschließend nach der Rückstreuintensität zu logarithmisieren und das Ergebnis als Bild abzuspeichern.
 
-## Anforderungen ##
+## Anforderungen 
 
 - Python 3.x
 - CMD.exe Prompt 0.1.1
