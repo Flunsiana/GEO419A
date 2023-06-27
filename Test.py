@@ -13,6 +13,16 @@ from skimage.transform import resize
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
 def download_zip(url, destination_folder):
+    """
+        Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner
+
+        Args:
+            url (str): Die URL der Zip-Datei
+            destination_folder (str): Der Pfad zum Zielordner, in dem die Zip-Datei gespeichert werden soll
+
+        Returns:
+            str: Der Pfad zur heruntergeladenen Zip-Datei
+    """
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
 
@@ -29,6 +39,16 @@ def download_zip(url, destination_folder):
 
 # Funktion zum Entpacken der Zip-Datei im Zielordner, falls noch nicht geschehen
 def extract_zip(zip_file, destination_folder):
+    """
+        Funktion zum Entpacken der Zip-Datei im Zielordner
+
+        Args:
+            zip_file (str): Der Pfad zur Zip-Datei
+            destination_folder (str): Der Pfad zum Zielordner, in dem die Dateien entpackt werden sollen
+
+        Returns:
+            str: Der Pfad zur extrahierten TIFF-Datei
+    """
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
         zip_contents = zip_ref.namelist()
         for file_name in zip_contents:
@@ -39,11 +59,21 @@ def extract_zip(zip_file, destination_folder):
                 else:
                     zip_ref.extract(file_name, destination_folder)
                     print(f"Entpackte Datei:\n{extracted_file}")
-                return extracted_file
+            return extracted_file
 
 
 # Funktion zur Verarbeitung der TIFF-Datei
 def process_tiff_file(tiff_file, destination_folder):
+    """
+        Funktion zur Verarbeitung der TIFF-Datei
+
+        Args:
+            tiff_file (str): Der Pfad zur TIFF-Datei
+            destination_folder (str): Der Pfad zum Zielordner, in dem die Ergebnisgrafik gespeichert werden soll
+
+        Returns:
+            None
+        """
     # TIFF-Bild als Numpy-Array einlesen
     tiff_data = tiff.imread(tiff_file)
 
@@ -104,6 +134,15 @@ def process_tiff_file(tiff_file, destination_folder):
 
 
 def main(destination_folder):
+    """
+        Hauptfunktion, die den Ablauf des Programms steuert
+
+        Args:
+            destination_folder (str): Der Pfad zum Zielordner, der als Kommandozeilenargument übergeben wurde
+
+        Returns:
+            None
+        """
     # Überprüfen der Kommandozeilenargumente
     if len(sys.argv) < 2:
         print("Bitte geben Sie den Pfad zum Zielordner an.")
