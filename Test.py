@@ -1,3 +1,19 @@
+
+##### WAS fehlt ######
+
+# 1
+# Es soll möglich sein die Funktion aus dem Skript zu importieren: from skript import function
+# In einer anderen Datei kannst du dann die Funktion main importieren und verwenden:
+# from skript import main
+# destination_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/"
+# main(destination_folder)
+
+# 2
+# Es soll möglich sein das Skript direkt auszuführen.
+# Das zu definierende Nutzerverzeichnis soll hierbei bei dem Aufruf übergeben werden können:
+# python skript.py D:\\..\\directory (Windows)
+
+
 # Python Standardbibliotheken
 import os
 import urllib.request
