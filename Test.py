@@ -11,6 +11,7 @@
 import os
 import urllib.request
 import zipfile
+import argparse
 
 # Drittanbieter-Bibliotheken
 import matplotlib.pyplot as plt
@@ -167,8 +168,10 @@ def main(destination_folder):
         print("Keine TIFF-Datei gefunden.")
 
 
-# Prüfen, ob das Skript direkt ausgeführt wird
 if __name__ == '__main__':
-    destination_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/"
-    main(destination_folder)
+    parser = argparse.ArgumentParser(description='Skript zur Verarbeitung von TIFF-Dateien')
+    parser.add_argument('destination_folder', help='Der Pfad zum Zielordner')
+
+    args = parser.parse_args()
+    main(args.destination_folder)
 
