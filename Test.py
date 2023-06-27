@@ -1,6 +1,6 @@
 # Python Standardbibliotheken
 import os
-import sys
+#import sys
 import urllib.request
 import zipfile
 
@@ -26,15 +26,15 @@ def download_zip(url, destination_folder):
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
 
-    zip_filename = os.path.join(destination_folder, os.path.basename(url))
+    zip_filepath = os.path.join(destination_folder, os.path.basename(url))
 
-    if os.path.exists(zip_filename):
-        print(f"{zip_filename}\nDatei existiert bereits. Download übersprungen.")
+    if os.path.exists(zip_filepath):
+        print(f"{zip_filepath}\nDatei existiert bereits. Download übersprungen.")
     else:
-        urllib.request.urlretrieve(url, zip_filename)
-        print(f"Heruntergeladene ZIP-Datei:\n{zip_filename}")
+        urllib.request.urlretrieve(url, zip_filepath)
+        print(f"Heruntergeladene ZIP-Datei:\n{zip_filepath}")
 
-    return zip_filename
+    return zip_filepath
 
 
 # Funktion zum Entpacken der Zip-Datei im Zielordner, falls noch nicht geschehen
@@ -144,35 +144,41 @@ def main(destination_folder):
             None
         """
     # Überprüfen der Kommandozeilenargumente
-    if len(sys.argv) < 2:
-        print("Bitte geben Sie den Pfad zum Zielordner an.")
-        return
+    #if len(sys.argv) < 2:
+    #    print("Bitte geben Sie den Pfad zum Zielordner an.")
+    #    return
 
     # Nutzerverzeichnis aus Kommandozeilenargumenten lesen
-    user_directory = sys.argv[1]
+    #user_directory = sys.argv[1]
+
+    #destination_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python"
 
     # Download-URL
     download_url = "https://upload.uni-jena.de/data/641c17ff33dd02.60763151/GEO419A_Testdatensatz.zip"
 
     # ZIP-Datei herunterladen
-    zip_file_path = download_zip(download_url, user_directory)
+    zip_file_path = download_zip(download_url, destination_folder) #user_directory anstatt destination_folder
 
     # TIFF-Datei aus der ZIP-Datei extrahieren
-    extracted_tiff_file = extract_zip(zip_file_path, user_directory)
+    extracted_tiff_file = extract_zip(zip_file_path, destination_folder) #user_directory anstatt destination_folder
 
     if extracted_tiff_file:
         # TIFF-Datei verarbeiten
-        process_tiff_file(extracted_tiff_file, user_directory)
+        process_tiff_file(extracted_tiff_file, destination_folder) #user_directory anstatt destination_folder
     else:
         print("Keine TIFF-Datei gefunden.")
 
 
+# Prüfen, ob das Skript direkt ausgeführt wird
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Bitte geben Sie den Pfad zum Zielordner an.")
-        sys.exit(1)
-
-    destination_folder = sys.argv[1]
+    destination_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/"
     main(destination_folder)
+
+    # Argumente überprüfen
+    #if len(sys.argv) > 1:
+    #    destination_folder = sys.argv[1]  # Nutzerverzeichnis aus den Argumenten lesen
+    #    main(destination_folder)  # Hauptfunktion aufrufen
+    #else:
+    #    print("Bitte geben Sie das Nutzerverzeichnis als Argument an.")
 
 
