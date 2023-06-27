@@ -1,6 +1,5 @@
 # Python Standardbibliotheken
 import os
-#import sys
 import urllib.request
 import zipfile
 
@@ -143,28 +142,18 @@ def main(destination_folder):
         Returns:
             None
         """
-    # Überprüfen der Kommandozeilenargumente
-    #if len(sys.argv) < 2:
-    #    print("Bitte geben Sie den Pfad zum Zielordner an.")
-    #    return
-
-    # Nutzerverzeichnis aus Kommandozeilenargumenten lesen
-    #user_directory = sys.argv[1]
-
-    #destination_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python"
-
     # Download-URL
     download_url = "https://upload.uni-jena.de/data/641c17ff33dd02.60763151/GEO419A_Testdatensatz.zip"
 
     # ZIP-Datei herunterladen
-    zip_file_path = download_zip(download_url, destination_folder) #user_directory anstatt destination_folder
+    zip_file_path = download_zip(download_url, destination_folder)
 
     # TIFF-Datei aus der ZIP-Datei extrahieren
-    extracted_tiff_file = extract_zip(zip_file_path, destination_folder) #user_directory anstatt destination_folder
+    extracted_tiff_file = extract_zip(zip_file_path, destination_folder)
 
     if extracted_tiff_file:
         # TIFF-Datei verarbeiten
-        process_tiff_file(extracted_tiff_file, destination_folder) #user_directory anstatt destination_folder
+        process_tiff_file(extracted_tiff_file, destination_folder)
     else:
         print("Keine TIFF-Datei gefunden.")
 
@@ -173,12 +162,4 @@ def main(destination_folder):
 if __name__ == '__main__':
     destination_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/"
     main(destination_folder)
-
-    # Argumente überprüfen
-    #if len(sys.argv) > 1:
-    #    destination_folder = sys.argv[1]  # Nutzerverzeichnis aus den Argumenten lesen
-    #    main(destination_folder)  # Hauptfunktion aufrufen
-    #else:
-    #    print("Bitte geben Sie das Nutzerverzeichnis als Argument an.")
-
 
