@@ -171,13 +171,6 @@ def get_destination_folder():
 
 
 if __name__ == '__main__':
-    # Überprüfen, ob ein Kommandozeilenargument übergeben wurde
-    if len(sys.argv) > 1:
-        # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
-        main(sys.argv[1])
-    else:
-        # Eingabeaufforderung anzeigen und das Nutzerverzeichnis abrufen
-        destination_folder = input("Geben Sie das Nutzerverzeichnis ein: ")
-
-        # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
-        main(destination_folder)
+    destination_folder = get_destination_folder()
+    # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
+    main(destination_folder)
