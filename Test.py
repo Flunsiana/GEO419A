@@ -2,6 +2,7 @@
 import os
 import urllib.request
 import zipfile
+import sys
 
 # Drittanbieter-Bibliotheken
 import matplotlib.pyplot as plt
@@ -159,10 +160,14 @@ def main(destination_folder):
 
 
 if __name__ == '__main__':
-    # Nutzerverzeichnis erfassen
-    destination_folder = input("Geben Sie das Nutzerverzeichnis ein: ")
+    # Überprüfen, ob das Nutzerverzeichnis als Kommandozeilenargument übergeben wurde
+    if len(sys.argv) > 1:
+        destination_folder = sys.argv[1]
+    else:
+        # Fallback, falls kein Nutzerverzeichnis angegeben wurde
+        destination_folder = input("Geben Sie das Nutzerverzeichnis ein: ")
 
-    # main-Funktion aufrufen und den eingegebenen Pfad übergeben
+    # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
     main(destination_folder)
 
 
