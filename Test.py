@@ -1,17 +1,7 @@
-
-##### WAS fehlt ######
-
-# 2
-# Es soll möglich sein das Skript direkt auszuführen.
-# Das zu definierende Nutzerverzeichnis soll hierbei bei dem Aufruf übergeben werden können:
-# python skript.py D:\\..\\directory (Windows)
-
-
 # Python Standardbibliotheken
 import os
 import urllib.request
 import zipfile
-import argparse
 
 # Drittanbieter-Bibliotheken
 import matplotlib.pyplot as plt
@@ -169,9 +159,11 @@ def main(destination_folder):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Skript zur Verarbeitung von TIFF-Dateien')
-    parser.add_argument('destination_folder', help='Der Pfad zum Zielordner')
+    # Nutzerverzeichnis erfassen
+    destination_folder = input("Geben Sie das Nutzerverzeichnis ein: ")
 
-    args = parser.parse_args()
-    main(args.destination_folder)
+    # main-Funktion aufrufen und den eingegebenen Pfad übergeben
+    main(destination_folder)
+
+
 

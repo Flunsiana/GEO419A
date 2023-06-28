@@ -1,5 +1,5 @@
 from Test import main
 
-destination_folder = "C:/Users/natas/OneDrive/Dokumente/Master_Geoinformatik/1. Semester/Python/"
+destination_folder = input("Geben Sie das Nutzerverzeichnis ein: ")
 main(destination_folder)
 
