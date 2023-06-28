@@ -16,8 +16,8 @@ if 'pydevd' in sys.modules:
     # Den Benutzer nach dem Zielordner fragen
     destination_folder = input("Geben Sie den Zielordner ein: ")
 else:
-    # Den aktuellen Skriptordner als Zielordner verwenden
-    destination_folder = os.path.dirname(os.path.abspath(__file__))
+    # Den Pfad als Zielordner verwenden
+    destination_folder = os.path.abspath(os.getcwd())
 
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
@@ -179,9 +179,6 @@ def get_destination_folder():
 # Den Zielordner abrufen
 if __name__ == '__main__':
     destination_folder = get_destination_folder()
-
-    if len(sys.argv) <= 1:
-        destination_folder = input("Geben Sie den Zielordner ein: ")
 
     # Die Hauptfunktion mit dem Zielordner aufrufen
     main(destination_folder)
