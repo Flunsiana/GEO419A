@@ -2,7 +2,6 @@
 import os
 import urllib.request
 import zipfile
-import sys
 
 # Drittanbieter-Bibliotheken
 import matplotlib.pyplot as plt
