@@ -49,22 +49,17 @@ def extract_zip(zip_file, destination_folder):
         Returns:
             str: Der Pfad zur extrahierten TIFF-Datei
     """
-    extracted_file = os.path.join(destination_folder, "Testbild.tif")
-    if os.path.exists(extracted_file):
-        print(f"{extracted_file}\nDatei bereits entpackt. Entpacken übersprungen.")
-    else:
-        with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-            zip_contents = zip_ref.namelist()
-            for file_name in zip_contents:
-                if not file_name.startswith("__MACOSX") and file_name.endswith(".tif"):
-                    extracted_file = os.path.join(destination_folder, "Testbild.tif")
-                    if os.path.exists(extracted_file):
-                        print(f"{extracted_file}\nDatei bereits entpackt. Entpacken übersprungen.")
-                    else:
-                        zip_ref.extract(file_name, destination_folder)
-                        extracted_file = os.path.join(destination_folder, "Testbild.tif")
-                        print(f"Entpackte Datei:\n{extracted_file}")
-    return extracted_file
+    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
+        zip_contents = zip_ref.namelist()
+        for file_name in zip_contents:
+            if not file_name.startswith("__MACOSX") and file_name.endswith(".tif"):
+                extracted_file = os.path.join(destination_folder, file_name)
+                if os.path.exists(extracted_file):
+                    print(f"{extracted_file}\nDatei bereits entpackt. Entpacken übersprungen.")
+                else:
+                    zip_ref.extract(file_name, destination_folder)
+                    print(f"Entpackte Datei:\n{extracted_file}")
+            return extracted_file
 
 
 # Funktion zur Verarbeitung der TIFF-Datei
