@@ -11,15 +11,6 @@ import tifffile as tiff
 from skimage.transform import resize
 
 
-# Überprüfen, ob das Skript aus PyCharm oder der Befehlszeile ausgeführt wird
-if 'pydevd' in sys.modules:
-    # Den Benutzer nach dem Zielordner fragen
-    destination_folder = input("Geben Sie den Zielordner ein: ")
-else:
-    # Den Pfad als Zielordner verwenden
-    destination_folder = os.path.abspath(os.getcwd())
-
-
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
 def download_zip(url, destination_folder):
     """
