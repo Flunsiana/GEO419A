@@ -163,13 +163,21 @@ def main(destination_folder):
         print("Keine TIFF-Datei gefunden.")
 
 
-if __name__ == '__main__':
-    # Überprüfen, ob das Nutzerverzeichnis als Kommandozeilenargument übergeben wurde
+def get_destination_folder():
     if len(sys.argv) > 1:
-        destination_folder = sys.argv[1]
+        return sys.argv[1]
     else:
-        # Fallback, falls kein Nutzerverzeichnis angegeben wurde
+        return input("Geben Sie das Nutzerverzeichnis ein: ")
+
+
+if __name__ == '__main__':
+    # Überprüfen, ob ein Kommandozeilenargument übergeben wurde
+    if len(sys.argv) > 1:
+        # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
+        main(sys.argv[1])
+    else:
+        # Eingabeaufforderung anzeigen und das Nutzerverzeichnis abrufen
         destination_folder = input("Geben Sie das Nutzerverzeichnis ein: ")
 
-    # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
-    main(destination_folder)
+        # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
+        main(destination_folder)
