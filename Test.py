@@ -12,7 +12,7 @@ from skimage.transform import resize
 
 
 # Überprüfen, ob das Skript aus PyCharm oder der Befehlszeile ausgeführt wird
-if 'pycharm' in sys.modules:
+if 'pydevd' in sys.modules:
     # Den Benutzer nach dem Zielordner fragen
     destination_folder = input("Geben Sie den Zielordner ein: ")
 else:
@@ -173,10 +173,7 @@ def main(destination_folder):
 
 
 def get_destination_folder():
-    if len(sys.argv) > 1:
-        return sys.argv[1]
-    else:
-        return os.getcwd()
+    return os.getcwd()
 
 
 # Den Zielordner abrufen
@@ -184,7 +181,7 @@ if __name__ == '__main__':
     destination_folder = get_destination_folder()
 
     if len(sys.argv) <= 1:
-        destination_folder = input("Enter the destination folder: ")
+        destination_folder = input("Geben Sie den Zielordner ein: ")
 
     # Die Hauptfunktion mit dem Zielordner aufrufen
     main(destination_folder)
