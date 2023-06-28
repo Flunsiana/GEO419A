@@ -167,10 +167,14 @@ def get_destination_folder():
     if len(sys.argv) > 1:
         return sys.argv[1]
     else:
-        return input("Geben Sie das Nutzerverzeichnis ein: ")
+        return os.getcwd()
 
 
 if __name__ == '__main__':
     destination_folder = get_destination_folder()
+
+    if len(sys.argv) <= 1:
+        destination_folder = input("Geben Sie das Nutzerverzeichnis ein: ")
+
     # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
     main(destination_folder)
