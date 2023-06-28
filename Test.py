@@ -169,6 +169,3 @@ if __name__ == '__main__':
 
     # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
     main(destination_folder)
-
-
-
