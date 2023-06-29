@@ -2,7 +2,6 @@
 import os
 import urllib.request
 import zipfile
-import sys
 
 # Drittanbieter-Bibliotheken
 import matplotlib.pyplot as plt
@@ -74,6 +73,10 @@ def process_tiff_file(tiff_file, destination_folder):
         Returns:
             None
         """
+    if not os.path.exists(tiff_file):
+        print("Die TIFF-Datei wurde nicht gefunden.")
+        return
+
     # TIFF-Bild als Numpy-Array einlesen
     tiff_data = tiff.imread(tiff_file)
 
@@ -159,16 +162,13 @@ def main(destination_folder):
         print("Keine TIFF-Datei gefunden.")
 
 
+def get_destination_folder():
+    return os.getcwd()
+
+
+# Den Zielordner abrufen
 if __name__ == '__main__':
-    # Überprüfen, ob das Nutzerverzeichnis als Kommandozeilenargument übergeben wurde
-    if len(sys.argv) > 1:
-        destination_folder = sys.argv[1]
-    else:
-        # Fallback, falls kein Nutzerverzeichnis angegeben wurde
-        destination_folder = input("Geben Sie das Nutzerverzeichnis ein: ")
+    destination_folder = get_destination_folder()
 
-    # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
+    # Die Hauptfunktion mit dem Zielordner aufrufen
     main(destination_folder)
-
-
-
