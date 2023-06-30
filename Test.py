@@ -6,8 +6,10 @@ import zipfile
 # Drittanbieter-Bibliotheken
 import matplotlib.pyplot as plt
 import numpy as np
+import rasterio
 import tifffile as tiff
-from skimage.transform import resize
+#from skimage.transform import resize
+from PIL import Image
 
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
@@ -78,7 +80,7 @@ def process_tiff_file(tiff_file, destination_folder):
         return
 
     # TIFF-Bild als Numpy-Array einlesen
-    tiff_data = tiff.imread(tiff_file)
+    tiff_data = rasterio.open(tiff_file).read(1)
 
     # Numpy-Array erstellen
     tiff_array = np.array(tiff_data)
@@ -89,24 +91,14 @@ def process_tiff_file(tiff_file, destination_folder):
     # Logarithmische Skalierung
     gamma_dB0 = 10 * np.log10(tiff_log)
 
-    # Auflösung reduzieren
-    reduced_resolution = (20000, 20000)
-    gamma_dB0_resized = resize(gamma_dB0, reduced_resolution)
-
     # Wertebereich überprüfen
-    min_value = np.nanmin(gamma_dB0_resized)
-    max_value = np.nanmax(gamma_dB0_resized)
+    min_value = np.nanmin(gamma_dB0)
+    max_value = np.nanmax(gamma_dB0)
     print("Min-Wert:", min_value)
     print("Max-Wert:", max_value)
 
-    # Bild in Graustufen anzeigen
-    plt.imshow(gamma_dB0_resized, cmap='gray')
-
     # Farbskala erstellen
-    scale = plt.colorbar(label='dB')
-
-    # Abstand zwischen Farbskalen-Beschriftung und Farbskala erhöhen
-    scale.ax.yaxis.set_label_coords(4, 0.5)
+    plt.imshow(gamma_dB0, cmap='gray')
 
     # Begrenzung der Farbskala auf den Wertebereich
     plt.clim(min_value, max_value)
@@ -126,14 +118,26 @@ def process_tiff_file(tiff_file, destination_folder):
     ax.spines['left'].set_linewidth(0.5)
 
     # Farbkodierung der "no data"-Bereiche
-    plt.imshow(np.isnan(gamma_dB0_resized), cmap='gray', alpha=0.2, vmin=0, vmax=1)
+    plt.imshow(np.isnan(gamma_dB0), cmap='gray', alpha=0.2, vmin=0, vmax=1)
 
-    # Als png speichern
-    output_file = os.path.join(destination_folder, "graphik_reduced_resolution.png")
-    plt.savefig(output_file, dpi=300)
+    # Farbskala erstellen
+    scale = plt.colorbar(label='dB')
+
+    # Begrenzung der Farbskala auf den Wertebereich
+    plt.clim(min_value, max_value)
+
+    # Als GeoTIFF speichern
+    output_file = os.path.join(destination_folder, "graphik.tif")
+    with rasterio.open(output_file, 'w', driver='GTiff', width=gamma_dB0.shape[1], height=gamma_dB0.shape[0],
+                       count=1, dtype=gamma_dB0.dtype) as dst:
+        dst.write(gamma_dB0, 1)
 
     # Grafik anzeigen
     plt.show()
+
+    # Als png speichern
+    output_file = os.path.join(destination_folder, "graphik_reduced_resolution_v2.png")
+    plt.savefig(output_file, dpi=300)
 
 
 def main(destination_folder):
