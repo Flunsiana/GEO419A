@@ -133,6 +133,7 @@ def process_tiff_file(tiff_file, destination_folder):
         dst.write(gamma_dB0, 1)
 
     # Grafik anzeigen
+
     plt.show()
 
     # Als png speichern
