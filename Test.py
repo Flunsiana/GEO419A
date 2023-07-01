@@ -7,7 +7,6 @@ import zipfile
 import matplotlib.pyplot as plt
 import numpy as np
 import rasterio
-from rasterio.plot import show
 
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
@@ -78,6 +77,9 @@ def process_tiff_file(tiff_file, destination_folder):
         print("Die TIFF-Datei wurde nicht gefunden.")
         return
 
+    tiff_dataset = rasterio.open(tiff_file)
+    print(tiff_dataset.crs)
+
     # TIFF-Bild als Numpy-Array einlesen
     tiff_data = rasterio.open(tiff_file).read(1)
 
@@ -95,6 +97,12 @@ def process_tiff_file(tiff_file, destination_folder):
     max_value = np.nanmax(gamma_dB0)
     print("Min-Wert:", min_value)
     print("Max-Wert:", max_value)
+
+    # Als GeoTIFF speichern
+    output_file_tif = os.path.join(destination_folder, "graphik.tif")
+    with rasterio.open(output_file_tif, 'w', driver='GTiff', width=gamma_dB0.shape[1], height=gamma_dB0.shape[0],
+                       count=1, dtype=gamma_dB0.dtype) as dst:
+        dst.write(gamma_dB0, 1)
 
     # Farbskala erstellen
     plt.imshow(gamma_dB0, cmap='gray')
@@ -124,12 +132,6 @@ def process_tiff_file(tiff_file, destination_folder):
 
     # Begrenzung der Farbskala auf den Wertebereich
     plt.clim(min_value, max_value)
-
-    # Als GeoTIFF speichern
-    output_file_tif = os.path.join(destination_folder, "graphik.tif")
-    with rasterio.open(output_file_tif, 'w', driver='GTiff', width=gamma_dB0.shape[1], height=gamma_dB0.shape[0],
-                       count=1, dtype=gamma_dB0.dtype) as dst:
-        dst.write(gamma_dB0, 1)
 
     # Als png speichern
     output_file_png = os.path.join(destination_folder, "graphik_reduced_resolution.png")
