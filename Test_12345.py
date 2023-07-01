@@ -6,8 +6,8 @@ import zipfile
 # Drittanbieter-Bibliotheken
 import matplotlib.pyplot as plt
 import numpy as np
-import tifffile as tiff
-from skimage.transform import resize
+import rasterio
+from rasterio.crs import CRS
 
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
@@ -25,15 +25,15 @@ def download_zip(url, destination_folder):
     if not os.path.exists(destination_folder):
         os.makedirs(destination_folder)
 
-    zip_filename = os.path.join(destination_folder, os.path.basename(url))
+    zip_filepath = os.path.join(destination_folder, os.path.basename(url))
 
-    if os.path.exists(zip_filename):
-        print(f"{zip_filename}\nDatei existiert bereits. Download übersprungen.")
+    if os.path.exists(zip_filepath):
+        print(f"{zip_filepath}\nDatei existiert bereits. Download übersprungen.")
     else:
-        urllib.request.urlretrieve(url, zip_filename)
-        print(f"Heruntergeladene ZIP-Datei:\n{zip_filename}")
+        urllib.request.urlretrieve(url, zip_filepath)
+        print(f"Heruntergeladene ZIP-Datei:\n{zip_filepath}")
 
-    return zip_filename
+    return zip_filepath
 
 
 # Funktion zum Entpacken der Zip-Datei im Zielordner, falls noch nicht geschehen
@@ -61,73 +61,80 @@ def extract_zip(zip_file, destination_folder):
             return extracted_file
 
 
-# Download-URL
-download_url = "https://upload.uni-jena.de/data/641c17ff33dd02.60763151/S1A_IW_20230214T031857_DVP_RTC10_G_gpunem_A42B_VH_clipped.tif"
-# Ordnerpfad
-download_folder = "C:/Users/chrli/OneDrive/Studium/01 Master Geoinformatik Jena/Semester/1 WS-22-23/419 - " \
-                  "Python/419A_Abschlussaufgabe"
+# Funktion zur Verarbeitung der TIFF-Datei
+def process_tiff_file(tiff_file, destination_folder):
+    """
+        Funktion zur Verarbeitung der TIFF-Datei, führt logarithmische Skalierung durch,
+        zeigt das Bild an und speichert es als GeoTIFF und PNG
 
-# ZIP-Datei herunterladen
-zip_file_path = download_zip(download_url, download_folder)
+        Args:
+            tiff_file (str): Der Pfad zur TIFF-Datei
+            destination_folder (str): Der Pfad zum Zielordner, in dem die Ausgabedateien gespeichert werden soll
 
-# TIFF-Datei aus der ZIP-Datei extrahieren
-extracted_tiff_file = extract_zip(zip_file_path, download_folder)
+        Returns:
+            None
+    """
+    if not os.path.exists(tiff_file):
+        print("Die TIFF-Datei wurde nicht gefunden.")
+        return
 
-# TIFF-Bild als Numpy-Array einlesen
-tiff_data = tiff.imread(extracted_tiff_file)
+    with rasterio.open(tiff_file) as src:
+        # TIFF-Bild als Numpy-Array einlesen
+        img_array = src.read(1)
 
-# Numpy-Array erstellen
-tiff_array = np.array(tiff_data)
+    # Logarithmus-Transformation anwenden
+    log_img = 10 * np.log10(img_array)
 
-# Überprüfen und Ersetzen von Nullwerten mit np.nan
-tiff_log = np.where(tiff_array != 0, tiff_array, np.nan)
+    # Plot erstellen
+    plt.figure(figsize=(8, 8))
+    plt.imshow(log_img, cmap='gray', extent=[src.bounds.left, src.bounds.right, src.bounds.bottom, src.bounds.top])
+    plt.xlabel('X-Koordinate', labelpad=10)
+    plt.ylabel('Y-Koordinate', labelpad=10)
+    # Titel, Fettdruck und Abstand zur Grafik einstellen
+    plt.title('Logarithmisch skaliertes Satellitenbild', fontweight='bold', y=1.05)
+    plt.colorbar(label='dB')
 
-# Logarithmische Skalierung
-gamma_dB0 = 10 * np.log10(tiff_log)
+    # Als png speichern
+    output_file_png = os.path.join(destination_folder, "graphik_reduced_resolution.png")
+    plt.savefig(output_file_png, dpi=300)
 
-# Auflösung reduzieren
-reduced_resolution = (20000, 20000)
-gamma_dB0_resized = resize(gamma_dB0, reduced_resolution)
+    # Grafik anzeigen
+    plt.show()
 
-# Wertebereich überprüfen
-min_value = np.nanmin(gamma_dB0_resized)
-max_value = np.nanmax(gamma_dB0_resized)
-print("Min-Wert:", min_value)
-print("Max-Wert:", max_value)
 
-# Bild in Graustufen anzeigen
-plt.imshow(gamma_dB0_resized, cmap='gray')
+def main(destination_folder):
+    """
+        Hauptfunktion, die den Ablauf des Programms steuert
 
-# Farbskala erstellen
-scale = plt.colorbar(label='dB')
+        Args:
+            destination_folder (str): Der Pfad zum Zielordner, der als Kommandozeilenargument übergeben wurde
 
-# Abstand zwischen Farbskalen-Beschriftung und Farbskala erhöhen
-scale.ax.yaxis.set_label_coords(4, 0.5)
+        Returns:
+            None
+        """
+    # Download-URL
+    download_url = "https://upload.uni-jena.de/data/649ad4879284a9.22886089/GEO419A_Testdatensatz.zip"
 
-# Begrenzung der Farbskala auf den Wertebereich
-plt.clim(min_value, max_value)
+    # ZIP-Datei herunterladen
+    zip_file_path = download_zip(download_url, destination_folder)
 
-# Titel, Fettdruck und Abstand zur Grafik einstellen
-plt.title('Logarithmisch skaliertes Satellitenbild', fontweight='bold', y=1.05)
+    # TIFF-Datei aus der ZIP-Datei extrahieren
+    extracted_tiff_file = extract_zip(zip_file_path, destination_folder)
 
-# Achsenbeschriftung und Abstand zwischen Achsenbeschriftungen und Farbskala erhöhen
-plt.xlabel('X-Koordinate', labelpad=10)
-plt.ylabel('Y-Koordinate', labelpad=10)
+    if extracted_tiff_file:
+        # TIFF-Datei verarbeiten
+        process_tiff_file(extracted_tiff_file, destination_folder)
+    else:
+        print("Keine TIFF-Datei gefunden.")
 
-# Rahmen um die Grafik einstellen
-ax = plt.gca()
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['bottom'].set_linewidth(0.5)
-ax.spines['left'].set_linewidth(0.5)
 
-# Farbkodierung der "no data"-Bereiche
-plt.imshow(np.isnan(gamma_dB0_resized), cmap='gray', alpha=0.2, vmin=0, vmax=1)
+def get_destination_folder():
+    return os.getcwd()
 
-# Als png speichern
-output_file = "C:/Users/chrli/OneDrive/Studium/01 Master Geoinformatik Jena/Semester/1 WS-22-23/419 - " \
-              "Python/419A_Abschlussaufgabe/graphik_reduced_resolution.png"
-plt.savefig(output_file, dpi=300)
 
-# Grafik anzeigen
-plt.show()
+# Den Zielordner abrufen
+if __name__ == '__main__':
+    destination_folder = get_destination_folder()
+
+    # Die Hauptfunktion mit dem Zielordner aufrufen
+    main(destination_folder)
