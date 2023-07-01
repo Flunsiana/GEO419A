@@ -7,7 +7,6 @@ import zipfile
 import matplotlib.pyplot as plt
 import numpy as np
 import rasterio
-from rasterio.crs import CRS
 
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
@@ -82,17 +81,27 @@ def process_tiff_file(tiff_file, destination_folder):
         # TIFF-Bild als Numpy-Array einlesen
         img_array = src.read(1)
 
+    # Überprüfen und Ersetzen von Nullwerten mit np.nan
+    null_img = np.where(img_array != 0, img_array, np.nan)
+
     # Logarithmus-Transformation anwenden
-    log_img = 10 * np.log10(img_array)
+    log_img = 10 * np.log10(null_img)
 
     # Plot erstellen
-    plt.figure(figsize=(8, 8))
     plt.imshow(log_img, cmap='gray', extent=[src.bounds.left, src.bounds.right, src.bounds.bottom, src.bounds.top])
+
     plt.xlabel('X-Koordinate', labelpad=10)
     plt.ylabel('Y-Koordinate', labelpad=10)
     # Titel, Fettdruck und Abstand zur Grafik einstellen
     plt.title('Logarithmisch skaliertes Satellitenbild', fontweight='bold', y=1.05)
-    plt.colorbar(label='dB')
+    plt.colorbar(label='VH-Backscatter [dB]')
+
+    # Rahmen um die Grafik einstellen
+    ax = plt.gca()
+    ax.spines['top'].set_visible(0.5)
+    ax.spines['right'].set_visible(0.5)
+    ax.spines['bottom'].set_linewidth(0.5)
+    ax.spines['left'].set_linewidth(0.5)
 
     # Als png speichern
     output_file_png = os.path.join(destination_folder, "graphik_reduced_resolution.png")
