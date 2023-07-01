@@ -8,16 +8,17 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 - CMD.exe Prompt 0.1.1
 - Python-Pakete: `os`, `urllib.request`, `zipfile`, `sys`, `matplotlib.pyplot`, `numpy`, `rasterio`
 
+## Vorbereitung ##
+
+1. Laden Sie die die Dateien `GEO419A.py`, `Input.py` und `GEO419.yml` aus Github herunter
+2. Erstellen und aktivieren Sie die Conda-Umgebung
+
 ## Conda ##
 
 ```
 conda env create -f GEO419A.yml
 conda activate GEO419A
 ```
-## Vorbereitung ##
-
-1. Laden Sie die die Dateien `GEO419A.py`, `Input.py` und `GEO419.yml` aus Github herunter
-2. Erstellen und aktivieren Sie die Conda-Umgebung
 
 # Ausführung #
 
