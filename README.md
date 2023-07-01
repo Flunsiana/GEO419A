@@ -11,8 +11,8 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 ## Conda ##
 
 ```
-conda env create -f 419A.yml
-conda activate 419A
+conda env create -f GEO419A.yml
+conda activate GEO419A
 ```
 # Verwendung
 
