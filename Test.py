@@ -7,6 +7,7 @@ import zipfile
 import matplotlib.pyplot as plt
 import numpy as np
 import rasterio
+from rasterio.crs import CRS
 
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
@@ -77,17 +78,16 @@ def process_tiff_file(tiff_file, destination_folder):
         print("Die TIFF-Datei wurde nicht gefunden.")
         return
 
+    # TIFF-Dataset öffnen und das Transformationsobjekt erhalten
     tiff_dataset = rasterio.open(tiff_file)
-    print(tiff_dataset.crs)
+    transform = tiff_dataset.transform
+    crs = tiff_dataset.crs
 
     # TIFF-Bild als Numpy-Array einlesen
-    tiff_data = rasterio.open(tiff_file).read(1)
-
-    # Numpy-Array erstellen
-    tiff_array = np.array(tiff_data)
+    tiff_data = tiff_dataset.read(1)
 
     # Überprüfen und Ersetzen von Nullwerten mit np.nan
-    tiff_log = np.where(tiff_array != 0, tiff_array, np.nan)
+    tiff_log = np.where(tiff_data != 0, tiff_data, np.nan)
 
     # Logarithmische Skalierung
     gamma_dB0 = 10 * np.log10(tiff_log)
@@ -101,7 +101,7 @@ def process_tiff_file(tiff_file, destination_folder):
     # Als GeoTIFF speichern
     output_file_tif = os.path.join(destination_folder, "graphik.tif")
     with rasterio.open(output_file_tif, 'w', driver='GTiff', width=gamma_dB0.shape[1], height=gamma_dB0.shape[0],
-                       count=1, dtype=gamma_dB0.dtype) as dst:
+                       count=1, dtype=gamma_dB0.dtype, crs=crs, transform=transform) as dst:
         dst.write(gamma_dB0, 1)
 
     # Farbskala erstellen
@@ -152,7 +152,7 @@ def main(destination_folder):
             None
         """
     # Download-URL
-    download_url = "https://upload.uni-jena.de/data/641c17ff33dd02.60763151/GEO419A_Testdatensatz.zip"
+    download_url = "https://upload.uni-jena.de/data/649ad4879284a9.22886089/GEO419A_Testdatensatz.zip"
 
     # ZIP-Datei herunterladen
     zip_file_path = download_zip(download_url, destination_folder)
