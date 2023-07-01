@@ -11,21 +11,21 @@ import rasterio
 
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
-def download_zip(url, destination_folder):
+def download_zip(url, destination_folder_download):
     """
         Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner
 
         Args:
             url (str): Die URL der Zip-Datei
-            destination_folder (str): Der Pfad zum Zielordner, in dem die Zip-Datei gespeichert werden soll
+            destination_folder_download (str): Der Pfad zum Zielordner, in dem die Zip-Datei gespeichert werden soll
 
         Returns:
             str: Der Pfad zur heruntergeladenen Zip-Datei
     """
-    if not os.path.exists(destination_folder):
-        os.makedirs(destination_folder)
+    if not os.path.exists(destination_folder_download):
+        os.makedirs(destination_folder_download)
 
-    zip_filepath = os.path.join(destination_folder, os.path.basename(url))
+    zip_filepath = os.path.join(destination_folder_download, os.path.basename(url))
 
     if os.path.exists(zip_filepath):
         print(f"{zip_filepath}\nDatei existiert bereits. Download übersprungen.")
@@ -37,13 +37,13 @@ def download_zip(url, destination_folder):
 
 
 # Funktion zum Entpacken der Zip-Datei im Zielordner, falls noch nicht geschehen
-def extract_zip(zip_file, destination_folder):
+def extract_zip(zip_file, destination_folder_extract):
     """
         Funktion zum Entpacken der Zip-Datei im Zielordner
 
         Args:
             zip_file (str): Der Pfad zur Zip-Datei
-            destination_folder (str): Der Pfad zum Zielordner, in dem die Dateien entpackt werden sollen
+            destination_folder_extract (str): Der Pfad zum Zielordner, in dem die Dateien entpackt werden sollen
 
         Returns:
             str: Der Pfad zur extrahierten TIFF-Datei
@@ -52,24 +52,24 @@ def extract_zip(zip_file, destination_folder):
         zip_contents = zip_ref.namelist()
         for file_name in zip_contents:
             if not file_name.startswith("__MACOSX") and file_name.endswith(".tif"):
-                extracted_file = os.path.join(destination_folder, file_name)
+                extracted_file = os.path.join(destination_folder_extract, file_name)
                 if os.path.exists(extracted_file):
                     print(f"{extracted_file}\nDatei bereits entpackt. Entpacken übersprungen.")
                 else:
-                    zip_ref.extract(file_name, destination_folder)
+                    zip_ref.extract(file_name, destination_folder_extract)
                     print(f"Entpackte Datei:\n{extracted_file}")
             return extracted_file
 
 
 # Funktion zur Verarbeitung der TIFF-Datei
-def process_tiff_file(tiff_file, destination_folder):
+def process_tiff_file(tiff_file, destination_folder_tiff):
     """
         Funktion zur Verarbeitung der TIFF-Datei, führt logarithmische Skalierung durch,
         zeigt das Bild an und speichert es als GeoTIFF und PNG
 
         Args:
             tiff_file (str): Der Pfad zur TIFF-Datei
-            destination_folder (str): Der Pfad zum Zielordner, in dem die Ausgabedateien gespeichert werden soll
+            destination_folder_tiff (str): Der Pfad zum Zielordner, in dem die Ausgabedateien gespeichert werden soll
 
         Returns:
             None
@@ -105,19 +105,19 @@ def process_tiff_file(tiff_file, destination_folder):
     ax.spines['left'].set_linewidth(0.5)
 
     # Als png speichern
-    output_file_png = os.path.join(destination_folder, "graphik_reduced_resolution.png")
+    output_file_png = os.path.join(destination_folder_tiff, "graphik_reduced_resolution.png")
     plt.savefig(output_file_png, dpi=300)
 
     # Grafik anzeigen
     plt.show()
 
 
-def main(destination_folder):
+def main(destination_folder_main):
     """
         Hauptfunktion, die den Ablauf des Programms steuert
 
         Args:
-            destination_folder (str): Der Pfad zum Zielordner, der als Kommandozeilenargument übergeben wurde
+            destination_folder_main (str): Der Pfad zum Zielordner, der als Kommandozeilenargument übergeben wurde
 
         Returns:
             None
@@ -126,14 +126,14 @@ def main(destination_folder):
     download_url = "https://upload.uni-jena.de/data/649ad4879284a9.22886089/GEO419A_Testdatensatz.zip"
 
     # ZIP-Datei herunterladen
-    zip_file_path = download_zip(download_url, destination_folder)
+    zip_file_path = download_zip(download_url, destination_folder_main)
 
     # TIFF-Datei aus der ZIP-Datei extrahieren
-    extracted_tiff_file = extract_zip(zip_file_path, destination_folder)
+    extracted_tiff_file = extract_zip(zip_file_path, destination_folder_main)
 
     if extracted_tiff_file:
         # TIFF-Datei verarbeiten
-        process_tiff_file(extracted_tiff_file, destination_folder)
+        process_tiff_file(extracted_tiff_file, destination_folder_main)
     else:
         print("Keine TIFF-Datei gefunden.")
 
