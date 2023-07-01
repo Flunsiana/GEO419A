@@ -64,8 +64,7 @@ def extract_zip(zip_file, destination_folder_extract):
 # Funktion zur Verarbeitung der TIFF-Datei
 def process_tiff_file(tiff_file, destination_folder_tiff):
     """
-        Funktion zur Verarbeitung der TIFF-Datei, führt logarithmische Skalierung durch,
-        zeigt das Bild an und speichert es als GeoTIFF und PNG
+        Funktion zur Verarbeitung der TIFF-Datei
 
         Args:
             tiff_file (str): Der Pfad zur TIFF-Datei
@@ -88,11 +87,13 @@ def process_tiff_file(tiff_file, destination_folder_tiff):
     # Logarithmus-Transformation anwenden
     log_img = 10 * np.log10(null_img)
 
-    # Plot erstellen
+    # Plot erstellen, Farbskala setzen und Ausdehnung definieren
     plt.imshow(log_img, cmap='gray', extent=[src.bounds.left, src.bounds.right, src.bounds.bottom, src.bounds.top])
 
+    # Achsenbeschriftung und Abstand zwischen Achsenbeschriftungen erhöhen
     plt.xlabel('X-Koordinate', labelpad=10)
     plt.ylabel('Y-Koordinate', labelpad=10)
+
     # Titel, Fettdruck und Abstand zur Grafik einstellen
     plt.title('Logarithmisch skaliertes Satellitenbild', fontweight='bold', y=1.05)
     plt.colorbar(label='VH-Backscatter [dB]')
@@ -105,7 +106,7 @@ def process_tiff_file(tiff_file, destination_folder_tiff):
     ax.spines['left'].set_linewidth(0.5)
 
     # Als png speichern
-    output_file_png = os.path.join(destination_folder_tiff, "graphik_reduced_resolution.png")
+    output_file_png = os.path.join(destination_folder_tiff, "Satellitenbild_log.png")
     plt.savefig(output_file_png, dpi=300)
 
     # Grafik anzeigen
@@ -140,12 +141,12 @@ def main(destination_folder_main):
 
 # Den Zielordner abrufen
 if __name__ == '__main__':
-    # Überprüfen, ob das Nutzerverzeichnis als Kommandozeilenargument übergeben wurde
+    # Überprüfen, ob ein Befehlszeilenargument für den Zielordner angegeben wird
     if len(sys.argv) > 1:
         destination_folder = sys.argv[1]
     else:
-        # Fallback, falls kein Nutzerverzeichnis angegeben wurde
+        # Falls kein Zielordner angegeben wird, das aktuelle Arbeitsverzeichnis verwenden
         destination_folder = os.getcwd()
 
-    # main-Funktion aufrufen und das Nutzerverzeichnis übergeben
+    # Die main-Funktion wird aufgerufen und dem Zielordner übergeben
     main(destination_folder)
