@@ -6,7 +6,7 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 
 - Python 3.9.13 
 - CMD.exe Prompt 0.1.1
-- Python-Pakete: `os`, `urllib.request`, `zipfile`, `matplotlib.pyplot`, `numpy`, `tifffile`, `skimage.transform`
+- Python-Pakete: `os`, `urllib.request`, `zipfile`, `sys`, `matplotlib.pyplot`, `numpy`, `rasterio`
 
 ## Conda ##
 
