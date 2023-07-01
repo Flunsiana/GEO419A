@@ -104,8 +104,20 @@ def process_tiff_file(tiff_file, destination_folder):
                        count=1, dtype=gamma_dB0.dtype, crs=crs, transform=transform) as dst:
         dst.write(gamma_dB0, 1)
 
+
+
+    with rasterio.open(output_file_tif) as src:
+        tif_arr = src.read(1)
+        profile = src.profile
+
+    # Erstelle das korrekte CRS-Objekt
+    correct_crs = CRS.from_epsg(23736)
+
+    # Aktualisiere das Koordinatensystem in profile
+    profile['crs'] = correct_crs
+
     # Farbskala erstellen
-    plt.imshow(gamma_dB0, cmap='gray')
+    plt.imshow(tif_arr, cmap='gray', extent=profile['transform'])
 
     # Begrenzung der Farbskala auf den Wertebereich
     plt.clim(min_value, max_value)
@@ -125,13 +137,10 @@ def process_tiff_file(tiff_file, destination_folder):
     ax.spines['left'].set_linewidth(0.5)
 
     # Farbkodierung der "no data"-Bereiche
-    plt.imshow(np.isnan(gamma_dB0), cmap='gray', alpha=0.2, vmin=0, vmax=1)
+    #plt.imshow(cmap='gray')
 
     # Farbskala erstellen
     scale = plt.colorbar(label='dB')
-
-    # Begrenzung der Farbskala auf den Wertebereich
-    plt.clim(min_value, max_value)
 
     # Als png speichern
     output_file_png = os.path.join(destination_folder, "graphik_reduced_resolution.png")
