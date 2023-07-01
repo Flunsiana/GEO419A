@@ -7,9 +7,7 @@ import zipfile
 import matplotlib.pyplot as plt
 import numpy as np
 import rasterio
-import tifffile as tiff
-#from skimage.transform import resize
-from PIL import Image
+from rasterio.plot import show
 
 
 # Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
@@ -66,15 +64,16 @@ def extract_zip(zip_file, destination_folder):
 # Funktion zur Verarbeitung der TIFF-Datei
 def process_tiff_file(tiff_file, destination_folder):
     """
-        Funktion zur Verarbeitung der TIFF-Datei
+        Funktion zur Verarbeitung der TIFF-Datei, führt logarithmische Skalierung durch,
+        zeigt das Bild an und speichert es als GeoTIFF und PNG
 
         Args:
             tiff_file (str): Der Pfad zur TIFF-Datei
-            destination_folder (str): Der Pfad zum Zielordner, in dem die Ergebnisgrafik gespeichert werden soll
+            destination_folder (str): Der Pfad zum Zielordner, in dem die Ausgabedateien gespeichert werden soll
 
         Returns:
             None
-        """
+    """
     if not os.path.exists(tiff_file):
         print("Die TIFF-Datei wurde nicht gefunden.")
         return
@@ -127,18 +126,17 @@ def process_tiff_file(tiff_file, destination_folder):
     plt.clim(min_value, max_value)
 
     # Als GeoTIFF speichern
-    output_file = os.path.join(destination_folder, "graphik.tif")
-    with rasterio.open(output_file, 'w', driver='GTiff', width=gamma_dB0.shape[1], height=gamma_dB0.shape[0],
+    output_file_tif = os.path.join(destination_folder, "graphik.tif")
+    with rasterio.open(output_file_tif, 'w', driver='GTiff', width=gamma_dB0.shape[1], height=gamma_dB0.shape[0],
                        count=1, dtype=gamma_dB0.dtype) as dst:
         dst.write(gamma_dB0, 1)
 
-    # Grafik anzeigen
-
-    plt.show()
-
     # Als png speichern
-    output_file = os.path.join(destination_folder, "graphik_reduced_resolution_v2.png")
-    plt.savefig(output_file, dpi=300)
+    output_file_png = os.path.join(destination_folder, "graphik_reduced_resolution.png")
+    plt.savefig(output_file_png, dpi=300)
+
+    # Grafik anzeigen
+    plt.show()
 
 
 def main(destination_folder):
