@@ -14,7 +14,7 @@ Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, e
 conda env create -f GEO419A.yml
 conda activate GEO419A
 ```
-## Vorbereitung##
+## Vorbereitung ##
 
 1. Laden Sie die die Dateien `GEO419A.py`, `Input.py` und `GEO419.yml` aus Github herunter
 2. Erstellen und aktivieren Sie die Conda-Umgebung
