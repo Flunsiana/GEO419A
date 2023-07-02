@@ -10,7 +10,6 @@ import numpy as np
 import rasterio
 
 
-# Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner, falls noch nicht geschehen
 def download_zip(url, destination_folder_download):
     """
         Funktion zum Herunterladen der Zip-Datei der angegebenen URL und Speichern im Zielordner
@@ -36,7 +35,6 @@ def download_zip(url, destination_folder_download):
     return zip_filepath
 
 
-# Funktion zum Entpacken der Zip-Datei im Zielordner, falls noch nicht geschehen
 def extract_zip(zip_file, destination_folder_extract):
     """
         Funktion zum Entpacken der Zip-Datei im Zielordner
@@ -61,7 +59,6 @@ def extract_zip(zip_file, destination_folder_extract):
             return extracted_file
 
 
-# Funktion zur Verarbeitung der TIFF-Datei
 def process_tiff_file(tiff_file, destination_folder_tiff):
     """
         Funktion zur Verarbeitung der TIFF-Datei
@@ -139,7 +136,6 @@ def main(destination_folder_main):
         print("Keine TIFF-Datei gefunden.")
 
 
-# Den Zielordner abrufen
 if __name__ == '__main__':
     # Überprüfen, ob ein Befehlszeilenargument für den Zielordner angegeben wird
     if len(sys.argv) > 1:
