@@ -1,24 +1,38 @@
-# GEO 419A - Modulare Programmierung in der Fernerkundung: Dateninterpretation #
+# GEO419A - Modulare Programmierung in der Fernerkundung: Dateninterpretation #
 
-Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, eine TIFF-Datei als numpy-Array einzulesen, um diese anschließend nach der Rückstreuintensität zu logarithmisieren und das Ergebnis als Bild abzuspeichern.
+Dieses Python-Skript dient dazu, eine heruntergeladene ZIP-Datei zu entpacken, eine TIFF-Datei als numpy-Array einzulesen, um diese anschließend nach der Rückstreuintensität zu logarithmisieren und das Ergebnis zu ploten, um es als Bild abzuspeichern.
 
 ## Anforderungen ##
 
 - Python 3.9.13 
 - CMD.exe Prompt 0.1.1
-- Python-Pakete: `os`, `urllib.request`, `zipfile`, `matplotlib.pyplot`, `numpy`, `tifffile`, `skimage.transform`
+- Python-Pakete: `os`, `urllib.request`, `zipfile`, `sys`, `matplotlib.pyplot`, `numpy`, `rasterio`
 
-## Conda ##
+## Vorbereitung ##
+
+1. Laden Sie die die Dateien `GEO419A.py`, `Input.py` und `GEO419A.yml` aus Github herunter
+2. Erstellen und aktivieren Sie die Conda-Umgebung
 
 ```
-conda env create -f 419A.yml
-conda activate 419A
+conda env create -f GEO419A.yml
+conda activate GEO419A
 ```
-# Verwendung
 
-1. Laden Sie die die Dateien `main.py` und `419.yml` aus Github herunter
-2. Erstellen und aktivieren Sie die Conda-Umgebung 
-3. Öffnen Sie das Python-Skript in der erstellten Conda-Umgebung
-4. Geben Sie die Download-URL, den Pfad zum Zielordner und den Speicherpfad der PNG_Datei in den entsprechenden Variablen `download_url`, `download_folder` und `output_file` an
-5. Führen Sie das Programm aus
+# Ausführung #
+
+## integrierte Entwicklungsumgebung ##
+
+- Laden Sie beide Python-Skripte `GEO419A.py` und `Input.py` in den gleichen Arbeitsordner 
+- Achten Sie darauf, dass Sie in der Conda-Umgebung GEO419A sind
+- Führen Sie `Input.py` aus und geben Sie nach Aufforderung ihr Nutzerverzeichnis ein
+
+
+## Kommandozeile ##
+
+- Laden Sie das Python-Skript `GEO419A.py` in Ihren Arbeitsordner
+```
+cd \Pfad\Arbeitsordner\
+conda activate GEO419A
+python GEO419A.py
+```
 
