@@ -118,11 +118,11 @@ def main(destination_folder_main):
         Hauptfunktion, die den Ablauf des Programms steuert
 
         Args:
-            destination_folder_main (str): Der Pfad zum Zielordner, der als Kommandozeilenargument übergeben wurde
+            destination_folder_main (str): Der Pfad zum Zielordner
 
         Returns:
             None
-        """
+    """
     # Download-URL
     download_url = "https://upload.uni-jena.de/data/649ad4879284a9.22886089/GEO419A_Testdatensatz.zip"
 
