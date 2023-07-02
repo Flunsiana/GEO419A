@@ -26,7 +26,7 @@ conda activate GEO419A
 
 - Laden Sie beide Python-Skripte `GEO419A.py` und `Input.py` in den gleichen Arbeitsordner 
 - Achten Sie darauf, dass Sie in der Conda-Umgebung GEO419A sind
-- Führen Sie `Input.py` aus und geben Sie ihr Nutzerverzeichnis ein
+- Führen Sie `Input.py` aus und geben Sie nach Aufforderung ihr Nutzerverzeichnis ein
 
 
 ## Kommandozeile ##
